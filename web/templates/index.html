@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <!-- Formulario de registro de venta -->
+        <div class="col-md-6 mt-4">
+            <div class="card">
+                <h5 class="my-1" style="text-align: center;">Registre nueva venta</h5>
+                <div class="card-header">{{ equipo.nombre }}</div>
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.producto.label_tag }} {{ form.producto }}
+                        </div><br>
+                        <div class="form-group">
+                            {{ form.cantidad.label_tag }} {{ form.cantidad}}
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-sm btn-primary my-3">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Mis Ventas -->
+        <div class="col-md-6">
+            <h3 class="text-center">Mis Ventas</h3>
+            <br>
+            <table class="table table-bordered table-striped table-success">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Producto</th>
+                        <th scope="col" class="text-center">Cantidad</th>
+                        <th scope="col" class="text-center">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr>
+                        <td>{{ venta.producto.nombre }}</td>
+                        <td>{{ venta.venta.cantidad }}
+                        {% if venta.producto.unidades %}
+                        uns
+                        {% else %}
+                        Kgs
+                        {% endif %}</td>
+                        <td>{{ venta.venta.fecha|date:"d-m-Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
